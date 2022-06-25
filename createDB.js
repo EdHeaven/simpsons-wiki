@@ -1,15 +1,15 @@
 var MongoClient = require('mongodb').MongoClient
-
+var data = require("./data.js").data
 const uri = "mongodb://localhost:27017/"
 const client = new MongoClient(uri)
 async function run() {
     try  {
         await client.connect();
-        var database = client.db("sonic");
+        var database = client.db("simpsons-wiki");
         database.dropDatabase()
-        database = client.db("sonic");
-        const heroes = database.collection("heroes");
-        const result = await heroes.insertMany(data);
+        database = client.db("simpsons-wiki");
+        const characters = database.collection("characters");
+        const result = await characters.insertOne(data);
         console.log(`${result.insertedCount} documents were inserted`);
     } finally {
         await client.close();
