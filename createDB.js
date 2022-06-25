@@ -9,7 +9,7 @@ async function run() {
         database.dropDatabase()
         database = client.db("simpsons-wiki");
         const characters = database.collection("characters");
-        const result = await characters.insertOne(data);
+        const result = await characters.insertMany(data);
         console.log(`${result.insertedCount} documents were inserted`);
     } finally {
         await client.close();
