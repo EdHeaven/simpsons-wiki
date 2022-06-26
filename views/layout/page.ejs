@@ -4,7 +4,6 @@
     <title><%= title %></title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
     <link href="/bootstrap/dist/css/bootstrap.css" rel="stylesheet" type="text/css">
-    <script src="/jquery/dist/jquery.js"></script>
     <script src="/bootstrap/dist/js/bootstrap.js"></script>
 </head>
 <body>
@@ -14,9 +13,13 @@
         <li class="nav-item">
           <a class="nav-link" href="/">Главная</a>
         </li>
-        <% menu.forEach(function(character){ %>
-          <li><a href="/characters/<%=character.nick%>"><%=character.title%></a></li>
-          <% }) %>          
+        <% if(typeof nav=='object' && nav){ nav.forEach(function(item){ %>
+          <li class="nav-item">
+            <a class="nav-link" href="/characters/<%=item.nick%>">
+              <%=item.title%>
+            </a>
+          </li>
+        <% })} %>         
       </ul>
     </div>
   </nav>
