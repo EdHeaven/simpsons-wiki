@@ -1,6 +1,7 @@
-var express = require('express');
+var express = require('express')
 var router = express.Router()
 var Character = require("../models/character").Character
+var User = require("./../models/User").User
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -16,9 +17,9 @@ router.get('/', function(req, res, next) {
 
 /* GET login/registration page. */
 router.get('/logreg', function(req, res, next) {
-  res.render('logreg',{title: 'Вход'});
-  });
-
+  res.render('logreg',{title: 'Вход', error: "Пароль не верный!"});
+});
+  
 /* POST login/registration page. */
 router.post('/logreg', function(req, res, next) {
   var username = req.body.username
