@@ -4,12 +4,17 @@ var mongoose = require('mongoose')
 mongoose.connect('mongodb://localhost/simpsons-wiki')
 var Character = require("./models/character").Character
 
-mongoose.connection.on("open",function(){
-    var db = mongoose.connection.db
-    db.dropDatabase(function(err){
-        if(err) throw err
+function open(callback){
+    mongoose.connection.on("open",callback)
+}
 
-        async.parallel([
+function dropDatabase(callback){
+    var db = mongoose.connection.db
+    db.dropDatabase(callback)
+}
+
+function createCharacters(callback){
+    async.parallel([
             function(callback){
                 var homer = new Character({nick:"homer"})
                 homer.save(function(err,homer){
@@ -30,12 +35,21 @@ mongoose.connection.on("open",function(){
             }
         ],
         function(err,result){
-            if(err){
-                console.log(err)
-            } else {
-                console.log("Успешно созданы герои с никами: " +result.join(", "))
-            }
-            mongoose.disconnect()
+            callback(err)
         })
-    })
+}
+
+function close(callback){
+    mongoose.disconnect(callback)
+}
+
+async.series([
+    open,
+    dropDatabase,
+    createCharacters,
+    close
+],
+function(err,result){
+    if(err) throw err
+    console.log("ok")
 })
