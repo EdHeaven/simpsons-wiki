@@ -1,15 +1,12 @@
 var mongoose = require('mongoose')
-mongoose.connect('mongodb://localhost/test')
+mongoose.connect('mongodb://localhost/simpsons-wiki')
+var Character = require("./models/character").Character
 
-var schema = mongoose.Schema({ name: String })
+var character = new Character({
+    title: "Гомер Симпсон",
+    nick:"homer"
+})
 
-schema.methods.meow = function(){
-    console.log(this.get("name") + " сказал мяу")
-}
-
-var Cat = mongoose.model('Cat', schema)
-
-var kitty = new Cat({ name: 'Пушок' })
-kitty.save(function (err) {
-    kitty.meow()
+character.save(function(err, character, affected){
+    console.log(character.title)
 })
