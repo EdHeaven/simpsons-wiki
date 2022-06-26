@@ -1,19 +1,17 @@
-    var mongoose = require('mongoose')
+var mongoose = require('mongoose')
 mongoose.connect('mongodb://localhost/simpsons-wiki')
-var Character = require("./models/character").Character
 var async = require("async")
 var data = require('./data.js').data
 
 async.series([
     open,
     dropDatabase,
+    requireModels,
     createCharacters,
-    close
-],
-function(err,result){
-    if(err) throw err
-    console.log("ok")
-})
+    ],
+    function(err,result){
+        mongoose.disconnect()
+    })
 
 function open(callback){
     mongoose.connection.on("open",callback)
@@ -32,6 +30,12 @@ function createCharacters(callback){
      callback);
 }
 
-function close(callback){
-    mongoose.disconnect(callback)
+function requireModels(callback){
+    require("./models/character").Character
+
+    async.each(Object.keys(mongoose.models),function(modelName){
+        mongoose.models[modelName].ensureIndexes(callback)
+    },
+        callback
+    )
 }
