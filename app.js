@@ -4,6 +4,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var mongoose = require('mongoose')
+var session = require("express-session")
 var Character = require("./models/character").Character
 mongoose.connect('mongodb://localhost/simpsons-wiki')
 
@@ -24,6 +25,11 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'bower_components')));
+
+app.use(session({
+  secret: "Simpsons-wiki",
+  cookie:{maxAge:60*1000}
+}))
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
