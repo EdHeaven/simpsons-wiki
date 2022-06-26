@@ -15,15 +15,17 @@
             <label class="control-label col-sm-1">Пароль</label>
             <div class="col-sm-5">
                 <input class="form-control" type="password"
-                                 placeholder="Введите пароль"/>
+                                 placeholder="Введите пароль" name="password"/>
             </div>
         </div>
+        <br/>
         <div class="form-group">
             <div class="col-sm-offset-1 col-sm-5">
                 <input class="btn btn-primary" type="submit"
                                              value="Войти"/>
             </div>
         </div>
+        <br/>
         <% if(error) { %>
             <div class="alert alert-danger"><%= error %></div>
         <% } %>
