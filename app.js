@@ -26,9 +26,11 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'bower_components')));
 
-app.use(session({
+var MongoStore = require('connect-mongo');
+  app.use(session({
   secret: "Simpsons-wiki",
-  cookie:{maxAge:60*1000}
+  cookie:{maxAge:60*1000},
+  store: MongoStore.create({mongoUrl: 'mongodb://localhost/simpsons-wiki'})
 }))
 
 app.use('/', indexRouter);
