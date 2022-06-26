@@ -4,7 +4,8 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var mongoose = require('mongoose')
-mongoose.connect('mongodb://localhost/all')
+var Character = require("./models/character").Character
+mongoose.connect('mongodb://localhost/simpsons-wiki')
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
