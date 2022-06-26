@@ -33,6 +33,11 @@ var MongoStore = require('connect-mongo');
   store: MongoStore.create({mongoUrl: 'mongodb://localhost/simpsons-wiki'})
 }))
 
+app.use(function(req,res,next){
+  req.session.counter = req.session.counter + 1 || 1
+  next()
+  }) 
+
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/characters', characters);

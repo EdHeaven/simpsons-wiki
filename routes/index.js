@@ -1,4 +1,4 @@
-var express = require('express')
+var express = require('express');
 var router = express.Router()
 var Character = require("../models/character").Character
 
@@ -8,7 +8,8 @@ router.get('/', function(req, res, next) {
       req.session.greeting = "Hi!!!!"
       res.render('index', {
                               title: 'Симпсоны',
-                              menu: menu
+                              menu: menu,
+                              counter: req.session.counter
                           });
       })
   });
